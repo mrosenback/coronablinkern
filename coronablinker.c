@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdbool.h>
 
 //Simulates the network communication
 void networkSimulation(int messageType) {
@@ -20,6 +21,40 @@ void networkSimulation(int messageType) {
     printf("\n- Information has succesfully been sent! -\n");
 
     Sleep(1000);
+}
+
+//Checks if the date is correct
+bool checkDate(int dd, int mm, int yy) {
+    //Check year
+        if (yy >= 1900 && yy <= 9999)
+        {
+            //Check month
+            if (mm >= 1 && mm <= 12)
+            {
+                //Check days
+                if ((dd >= 1 && dd <= 31) && (mm == 1 || mm == 3 || mm == 5 || mm == 7 || mm == 8 || mm == 10 || mm == 12))
+                    return true;
+                else if ((dd >= 1 && dd <= 30) && (mm == 4 || mm == 6 || mm == 9 || mm == 11))
+                    return true;
+                else if ((dd >= 1 && dd <= 28) && (mm == 2))
+                    return true;
+                else if (dd == 29 && mm == 2 && (yy % 400 == 0 || (yy % 4 == 0 && yy % 100 != 0)))
+                    return true;
+                else
+                    printf("\nDay is not valid.\n\n");
+                    return false;
+            }
+            else
+            {
+                printf("\nMonth is not valid.\n\n");
+                return false;
+            }
+        }
+        else
+        {
+            printf("\nYear is not valid.\n\n");
+            return false;
+        }
 }
 
 //Shows the Opening Code menu
@@ -45,35 +80,13 @@ void identificationCode() {
     while(1) {
         printf("Enter the date (DD/MM/YYYY): ");
         scanf("%d/%d/%d", &dd, &mm, &yy);
-        //Check year
-        if (yy >= 1900 && yy <= 9999)
-        {
-            //Check month
-            if (mm >= 1 && mm <= 12)
-            {
-                //Check days
-                if ((dd >= 1 && dd <= 31) && (mm == 1 || mm == 3 || mm == 5 || mm == 7 || mm == 8 || mm == 10 || mm == 12))
-                    break;
-                else if ((dd >= 1 && dd <= 30) && (mm == 4 || mm == 6 || mm == 9 || mm == 11))
-                    break;
-                else if ((dd >= 1 && dd <= 28) && (mm == 2))
-                    break;
-                else if (dd == 29 && mm == 2 && (yy % 400 == 0 || (yy % 4 == 0 && yy % 100 != 0)))
-                    break;
-                else
-                    printf("\nDay is not valid.\n\n");
-            }
-            else
-            {
-                printf("\nMonth is not valid.\n\n");
-            }
-        }
-        else
-        {
-            printf("\nYear is not valid.\n\n");
+        
+        if(!checkDate(dd, mm, yy)) {
+            continue;
+        } else {
+            break;
         }
     }
-    
     networkSimulation(2);
 }
 
@@ -130,6 +143,5 @@ int main() {
             Sleep(2000);
         }
     }
-    
     return 0;
 }
