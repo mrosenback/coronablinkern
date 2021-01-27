@@ -6,9 +6,9 @@
 //Simulates the network communication
 void networkSimulation(int messageType) {
     if(messageType == 1) {
-        printf("\nOpening code received. Sending information to the server.\n");
+        printf("\n- Opening code received. Sending information to the server. -\n");
     } else {
-        printf("\nIdentification code and date received. Sending information to the server.\n");
+        printf("\n- Identification code and date received. Sending information to the server. -\n");
     }
     
     for(int i=0;i<3;i++) {
@@ -17,7 +17,7 @@ void networkSimulation(int messageType) {
     }
     Sleep(1000);
     
-    printf("\nInformation has succesfully been sent!\n");
+    printf("\n- Information has succesfully been sent! -\n");
 
     Sleep(1000);
 }
@@ -89,12 +89,18 @@ void contagionAlarm() {
     //Random identification code
     randomCode = rand() % 100 + 1;
     
+    for(int i=0;i<3;i++) {
+        Sleep(1000);
+        printf(".");
+    }
+    Sleep(1000);
+
     if(randomNumber == 1) {
-        printf("You may have been exposed!\n");
+        printf("\nYou may have been exposed!\n");
         printf("Identification code: %d\n", randomCode);
         Sleep(2000);
     } else {
-        printf("No exposure registered!\n");
+        printf("\nNo exposure registered!\n");
         Sleep(2000);
     }
 }
@@ -106,7 +112,7 @@ int main() {
     while (1)
     {
         printf("\n--- Welcome to Coronablinkern ---\n\n");
-        printf("1< Enter an Opening Code if you have been infected.\n2< Enter Identification Code.\n3< Receive Infection Alarm.\n4< Exit.\n\n");
+        printf("1< Enter an Opening Code if you have been infected\n2< Enter Identification Code\n3< Receive Infection Alarm\n4< Exit\n\n");
         printf("Choose category (1, 2 or 3): ");
         scanf("%d", &choice);
         
@@ -117,7 +123,7 @@ int main() {
         } else if(choice == 3) {
             contagionAlarm();
         } else if(choice == 4) {
-            printf("\nExisting program. Goodbye!\n\n");
+            printf("\nExiting program. Goodbye!\n\n");
             break;
         } else {
             printf("\nError: Choose a valid category.\n");
