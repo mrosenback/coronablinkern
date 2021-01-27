@@ -1,8 +1,15 @@
 #include <stdio.h>
 #include <Windows.h>
+#include <stdlib.h>
+#include <time.h>
 
-void networkSimulation() {
-    printf("\nOpening code received. Sending information to the server.\n");
+//Simulates the network communication
+void networkSimulation(int messageType) {
+    if(messageType == 1) {
+        printf("\nOpening code received. Sending information to the server.\n");
+    } else {
+        printf("\nIdentification code and date received. Sending information to the server.\n");
+    }
     
     for(int i=0;i<3;i++) {
         Sleep(1000);
@@ -15,15 +22,17 @@ void networkSimulation() {
     Sleep(1000);
 }
 
+//Shows the Opening Code menu
 void openingCode() {
     int openingCode;
 
     printf("\n--- Opening Code ---\n\n");
     printf("Enter your Opening Code: ");
     scanf("%d", &openingCode);
-    networkSimulation();
+    networkSimulation(1);
 }
 
+//Shows the Identification Code menu
 void identificationCode() {
     int identificationCode;
     int dd,mm,yy;
@@ -32,6 +41,7 @@ void identificationCode() {
     printf("Enter the Identification Code: ");
     scanf("%d", &identificationCode);
 
+    //Loops if the date is not valid
     while(1) {
         printf("Enter the date (DD/MM/YYYY): ");
         scanf("%d/%d/%d", &dd, &mm, &yy);
@@ -64,20 +74,39 @@ void identificationCode() {
         }
     }
     
-    networkSimulation();
+    networkSimulation(2);
 }
 
+//Checks if you've been exposed with random numbers
 void contagionAlarm() {
     printf("\n--- Contagion Alarm ---\n\n");
+
+    srand(time(NULL));
+    int randomNumber;
+    int randomCode;
+    //1/3 chance that you've been exposed
+    randomNumber = rand() % 4 + 1;
+    //Random identification code
+    randomCode = rand() % 100 + 1;
+    
+    if(randomNumber == 1) {
+        printf("You may have been exposed!\n");
+        printf("Identification code: %d\n", randomCode);
+        Sleep(2000);
+    } else {
+        printf("No exposure registered!\n");
+        Sleep(2000);
+    }
 }
 
 int main() {
     int choice = 5;
     
+    //Loops until the the exit option is picked
     while (1)
     {
         printf("\n--- Welcome to Coronablinkern ---\n\n");
-        printf("1< Enter an Opening Code if you have been infected.\n2< Enter Identification Code.\n3< Receive an Infection Alarm.\n4< Exit.\n\n");
+        printf("1< Enter an Opening Code if you have been infected.\n2< Enter Identification Code.\n3< Receive Infection Alarm.\n4< Exit.\n\n");
         printf("Choose category (1, 2 or 3): ");
         scanf("%d", &choice);
         
