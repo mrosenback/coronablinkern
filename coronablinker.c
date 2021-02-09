@@ -3,58 +3,28 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
+#include "date.h"
+#include "list.h"
 
 //Simulates the network communication
 void networkSimulation(int messageType) {
     if(messageType == 1) {
         printf("\n- Opening code received. Sending information to the server. -\n");
-    } else {
-        printf("\n- Identification code and date received. Sending information to the server. -\n");
-    }
-    
-    for(int i=0;i<3;i++) {
+
+        for (int i = 0; i < 3; i++)
+        {
+            Sleep(1000);
+            printf(".");
+        }
         Sleep(1000);
-        printf(".");
+        printf("\n- Information has succesfully been sent! -\n");
+    } else {
+        printf("\n- Information has been saved! -\n");
     }
-    Sleep(1000);
     
-    printf("\n- Information has succesfully been sent! -\n");
+    
 
     Sleep(1000);
-}
-
-//Checks if the date is correct
-bool checkDate(int dd, int mm, int yy) {
-    //Check year
-        if (yy >= 1900 && yy <= 9999)
-        {
-            //Check month
-            if (mm >= 1 && mm <= 12)
-            {
-                //Check days
-                if ((dd >= 1 && dd <= 31) && (mm == 1 || mm == 3 || mm == 5 || mm == 7 || mm == 8 || mm == 10 || mm == 12))
-                    return true;
-                else if ((dd >= 1 && dd <= 30) && (mm == 4 || mm == 6 || mm == 9 || mm == 11))
-                    return true;
-                else if ((dd >= 1 && dd <= 28) && (mm == 2))
-                    return true;
-                else if (dd == 29 && mm == 2 && (yy % 400 == 0 || (yy % 4 == 0 && yy % 100 != 0)))
-                    return true;
-                else
-                    printf("\nDay is not valid.\n\n");
-                    return false;
-            }
-            else
-            {
-                printf("\nMonth is not valid.\n\n");
-                return false;
-            }
-        }
-        else
-        {
-            printf("\nYear is not valid.\n\n");
-            return false;
-        }
 }
 
 //Shows the Opening Code menu
@@ -64,6 +34,8 @@ void openingCode() {
     printf("\n--- Opening Code ---\n\n");
     printf("Enter your Opening Code: ");
     scanf("%d", &openingCode);
+
+    printList();
     networkSimulation(1);
 }
 
@@ -87,35 +59,24 @@ void identificationCode() {
             break;
         }
     }
+    insert(identificationCode, dd, mm, yy);
     networkSimulation(2);
 }
 
-//Checks if you've been exposed with random numbers
+//Shows if you've been exposed with random code
 void contagionAlarm() {
-    printf("\n--- Contagion Alarm ---\n\n");
+    printf("\n--- Contagion Alarm ---\n");
 
     srand(time(NULL));
-    int randomNumber;
     int randomCode;
-    //1/3 chance that you've been exposed
-    randomNumber = rand() % 4 + 1;
+
     //Random identification code
     randomCode = rand() % 100 + 1;
     
-    for(int i=0;i<3;i++) {
-        Sleep(1000);
-        printf(".");
-    }
-    Sleep(1000);
-
-    if(randomNumber == 1) {
-        printf("\nYou may have been exposed!\n");
-        printf("Identification code: %d\n", randomCode);
-        Sleep(2000);
-    } else {
-        printf("\nNo exposure registered!\n");
-        Sleep(2000);
-    }
+    printf("\nYou may have been exposed!\n");
+    printf("Identification code: %d\n", randomCode);
+    Sleep(2000);
+    
 }
 
 int main() {
