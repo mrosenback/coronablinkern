@@ -11,10 +11,10 @@ int main() {
     VERIFY(insert(67, 15, 02, 2021), "Inserting ID: 67 and date: 15/02/2021");
 
     TEST_CASE("Insert ID and date in list");
-    VERIFY(insert(26, 25, 02, 2021), "Inserting ID: 26 and date: 25/02/2021");
+    VERIFY(insert(26, 21, 02, 2021), "Inserting ID: 26 and date: 21/02/2021");
 
     TEST_CASE("Insert ID and date in list");
-    VERIFY(insert(84, 04, 03, 2021), "Inserting ID: 84 and date: 04/03/2021");
+    VERIFY(insert(84, 25, 03, 2021), "Inserting ID: 84 and date: 25/03/2021");
 
     TEST_CASE("Insert ID and date in list");
     VERIFY(insert(12, 12, 03, 2021), "Inserting ID: 15 and date: 12/03/2021");

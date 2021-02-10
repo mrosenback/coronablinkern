@@ -33,10 +33,10 @@ bool printList() {
 
     struct Node* temp = head;
     
-    printf("\n---------------------------------------------");
+    printf("\n----------------------------");
     while(temp != NULL) {
-        printf("\n| Identification code: %d | Date: %d/%d/%d |\n",temp->data, temp->date.day, temp->date.month, temp->date.year);
-        printf("---------------------------------------------");
+        printf("\n| ID: %d | Date: %d/%d/%d |\n",temp->data, temp->date.day, temp->date.month, temp->date.year);
+        printf("----------------------------");
         temp = temp->next;
     }
     printf("\n");
