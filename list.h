@@ -1,4 +1,11 @@
+#include <stdbool.h>
 
-void insert();
+/**
+ * Insert new identification code and date to list
+ */
+bool insert();
 
-void printList();
+/**
+ * Print the list
+ */
+bool printList();

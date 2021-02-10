@@ -1,7 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "list.h"
 #include "date.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 struct Node { 
     int data;
@@ -11,8 +11,7 @@ struct Node {
 
 struct Node* head;
 
-//Insert new identification code and date to list
-void insert(int value, int dd, int mm, int yy) {
+bool insert(int value, int dd, int mm, int yy) {
 
     struct Node *temp = (struct Node*)malloc(sizeof(struct Node));
     temp->data = value;
@@ -26,18 +25,21 @@ void insert(int value, int dd, int mm, int yy) {
     }
 
     head = temp;
+
+    return true;
 }
 
-//Print the list
-void printList() {
+bool printList() {
 
     struct Node* temp = head;
     
-    printf("\n-----");
+    printf("\n---------------------------------------------");
     while(temp != NULL) {
-        printf("\nIdentification code: %d Date: %d/%d/%d\n",temp->data, temp->date.day, temp->date.month, temp->date.year);
-        printf("-----");
+        printf("\n| Identification code: %d | Date: %d/%d/%d |\n",temp->data, temp->date.day, temp->date.month, temp->date.year);
+        printf("---------------------------------------------");
         temp = temp->next;
     }
     printf("\n");
+
+    return true;
 }

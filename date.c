@@ -1,36 +1,43 @@
-#include <stdio.h>
 #include "date.h"
+#include <stdio.h>
 
-//Checks if the date is correct
-bool checkDate(int dd, int mm, int yy) {
+bool setDate(Date* date, int dd, int mm, int yy) {
+    date->day = dd;
+    date->month = mm;
+    date->year = yy;
+
+    return true;
+}
+
+bool checkDate(Date date) {
     //Check year
-        if (yy >= 1900 && yy <= 9999)
+        if (date.year >= 1900 && date.year <= 9999)
         {
             //Check month
-            if (mm >= 1 && mm <= 12)
+            if (date.month >= 1 && date.month <= 12)
             {
                 //Check days
-                if ((dd >= 1 && dd <= 31) && (mm == 1 || mm == 3 || mm == 5 || mm == 7 || mm == 8 || mm == 10 || mm == 12))
+                if ((date.day >= 1 && date.day <= 31) && (date.month == 1 || date.month == 3 || date.month == 5 || date.month == 7 || date.month == 8 || date.month == 10 || date.month == 12))
                     return true;
-                else if ((dd >= 1 && dd <= 30) && (mm == 4 || mm == 6 || mm == 9 || mm == 11))
+                else if ((date.day >= 1 && date.day <= 30) && (date.month == 4 || date.month == 6 || date.month == 9 || date.month == 11))
                     return true;
-                else if ((dd >= 1 && dd <= 28) && (mm == 2))
+                else if ((date.day >= 1 && date.day <= 28) && (date.month == 2))
                     return true;
-                else if (dd == 29 && mm == 2 && (yy % 400 == 0 || (yy % 4 == 0 && yy % 100 != 0)))
+                else if (date.day == 29 && date.month == 2 && (date.year % 400 == 0 || (date.year % 4 == 0 && date.year % 100 != 0)))
                     return true;
                 else
-                    printf("\nDay is not valid.\n\n");
+                    printf("Day is not valid.\n");
                     return false;
             }
             else
             {
-                printf("\nMonth is not valid.\n\n");
+                printf("Month is not valid.\n");
                 return false;
             }
         }
         else
         {
-            printf("\nYear is not valid.\n\n");
+            printf("Year is not valid.\n");
             return false;
         }
 }

@@ -1,10 +1,12 @@
+#include "date.h"
+#include "list.h"
 #include <stdio.h>
 #include <Windows.h>
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
-#include "date.h"
-#include "list.h"
+
+Date date;
 
 //Simulates the network communication
 void networkSimulation(int messageType) {
@@ -19,7 +21,7 @@ void networkSimulation(int messageType) {
         Sleep(1000);
         printf("\n- Information has succesfully been sent! -\n");
     } else {
-        printf("\n- Information has been saved! -\n");
+        printf("- Information has been saved! -\n");
     }
     
     
@@ -52,8 +54,12 @@ void identificationCode() {
     while(1) {
         printf("Enter the date (DD/MM/YYYY): ");
         scanf("%d/%d/%d", &dd, &mm, &yy);
+
+        printf("\n");
+
+        setDate(&date, dd, mm, yy);
         
-        if(!checkDate(dd, mm, yy)) {
+        if(!checkDate(date)) {
             continue;
         } else {
             break;
@@ -74,7 +80,7 @@ void contagionAlarm() {
     randomCode = rand() % 100 + 1;
     
     printf("\nYou may have been exposed!\n");
-    printf("Identification code: %d\n", randomCode);
+    printf("\nIdentification code: %d\n", randomCode);
     Sleep(2000);
     
 }
