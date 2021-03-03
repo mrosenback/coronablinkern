@@ -91,6 +91,7 @@ int main() {
     //Loops until the the exit option is picked
     while (1)
     {
+        delete();
         printf("\n--- Welcome to Coronablinkern ---\n\n");
         printf("1< Enter an Opening Code if you have been infected\n2< Enter Identification Code\n3< Receive Infection Alarm\n4< Exit\n\n");
         printf("Choose category (1, 2 or 3): ");

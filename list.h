@@ -5,6 +5,8 @@
  */
 bool insert();
 
+bool delete();
+
 /**
  * Print the list
  */

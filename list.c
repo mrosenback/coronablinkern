@@ -11,9 +11,11 @@ struct Node {
 
 struct Node* head;
 
+CurrentDate currentDate;
+
 bool insert(int value, int dd, int mm, int yy) {
 
-    struct Node *temp = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
     temp->data = value;
     temp->date.day = dd;
     temp->date.month = mm;
@@ -29,10 +31,26 @@ bool insert(int value, int dd, int mm, int yy) {
     return true;
 }
 
-bool printList() {
-
+bool delete() {
     struct Node* temp = head;
-    
+
+    getCurrentDate(&currentDate);
+
+    while(temp) {
+        int result = getDifference(currentDate, temp->date);
+        printf("svar: %d ", result);
+       if(result > 21) {
+           free(temp);
+       } 
+       temp = temp->next;
+    }
+
+    return true;
+}
+
+bool printList() {
+    struct Node* temp = head;
+
     printf("\n----------------------------");
     while(temp != NULL) {
         printf("\n| ID: %d | Date: %d/%d/%d |\n",temp->data, temp->date.day, temp->date.month, temp->date.year);

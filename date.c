@@ -1,5 +1,8 @@
 #include "date.h"
 #include <stdio.h>
+#include <time.h>
+
+int monthDays[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 bool setDate(Date* date, int dd, int mm, int yy) {
     date->day = dd;
@@ -40,4 +43,46 @@ bool checkDate(Date date) {
             printf("Year is not valid.\n");
             return false;
         }
+}
+
+bool getCurrentDate(CurrentDate* currentDate) {
+
+    time_t now;
+    time(&now);
+
+    struct tm *local = localtime(&now);
+
+    currentDate->day = local->tm_mday;
+    currentDate->month = local->tm_mon + 1;
+    currentDate->year = local->tm_year + 1900;
+
+    return true;
+}
+
+int getDifference(CurrentDate dt1, Date dt2)
+{
+    // COUNT TOTAL NUMBER OF DAYS
+    // BEFORE FIRST DATE 'dt1'
+ 
+    // initialize count using years and day
+    int n1 = dt1.year * 365 + dt1.day;
+ 
+    // Add days for months in given date
+    for (int i = 0; i < dt1.month - 1; i++)
+        n1 += monthDays[i];
+ 
+    // Since every leap year is of 366 days,
+    // Add a day for every leap year
+    //n1 += countLeapYears(dt1);
+ 
+    // SIMILARLY, COUNT TOTAL NUMBER OF
+    // DAYS BEFORE 'dt2'
+ 
+    int n2 = dt2.year * 365 + dt2.day;
+    for (int i = 0; i < dt2.month - 1; i++)
+        n2 += monthDays[i];
+    //n2 += countLeapYears(dt2);
+ 
+    // return difference between two counts
+    return (n2 - n1);
 }
