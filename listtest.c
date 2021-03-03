@@ -17,7 +17,7 @@ int main() {
     VERIFY(insert(84, 15, 03, 2021), "Inserting ID: 84 and date: 25/03/2021");
 
     TEST_CASE("Insert ID and date in list");
-    VERIFY(insert(12, 25, 03, 2020), "Inserting ID: 15 and date: 12/03/2020");
+    VERIFY(insert(12, 25, 03, 2021), "Inserting ID: 15 and date: 12/03/2020");
 
     TEST_CASE("Delete dates 21 days older than current date");
     VERIFY(delete(), "Deleting date(s)");

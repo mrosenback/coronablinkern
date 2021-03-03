@@ -3,9 +3,6 @@ OBJ = date.o list.o coronablinker.o
 CFLAGS = -Wall -pedantic
 
 # Target
-#%.o: %.c
-	#gcc $(CFLAGS) -c $< -o $@
-
 date.o: date.c date.h list.h
 	gcc $(CFLAGS) -c date.c -o date.o
 

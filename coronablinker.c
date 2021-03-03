@@ -37,6 +37,7 @@ void openingCode() {
     printf("Enter your Opening Code: ");
     scanf("%d", &openingCode);
 
+    delete();
     printList();
     networkSimulation(1);
 }
@@ -87,11 +88,20 @@ void contagionAlarm() {
 
 int main() {
     int choice = 5;
+    char * fileName = "list.txt";
+    FILE * fileptr;
+
+    fileptr = fopen(fileName, "r");
+    if(fileptr != NULL) {
+        readFromFile(fileptr);
+        fclose(fileptr);
+    } else {
+        printf("File not found!");
+    }
     
     //Loops until the the exit option is picked
     while (1)
     {
-        delete();
         printf("\n--- Welcome to Coronablinkern ---\n\n");
         printf("1< Enter an Opening Code if you have been infected\n2< Enter Identification Code\n3< Receive Infection Alarm\n4< Exit\n\n");
         printf("Choose category (1, 2 or 3): ");
@@ -111,5 +121,14 @@ int main() {
             Sleep(2000);
         }
     }
+
+    fileptr = fopen(fileName, "w");
+    if(fileptr != NULL) {
+        writeToFile(fileptr);
+        fclose(fileptr);
+    } else {
+        printf("File not found!");
+    }
+    
     return 0;
 }

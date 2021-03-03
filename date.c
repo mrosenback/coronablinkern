@@ -59,30 +59,15 @@ bool getCurrentDate(CurrentDate* currentDate) {
     return true;
 }
 
-int getDifference(CurrentDate dt1, Date dt2)
-{
-    // COUNT TOTAL NUMBER OF DAYS
-    // BEFORE FIRST DATE 'dt1'
- 
-    // initialize count using years and day
+int getDifference(CurrentDate dt1, Date dt2) {
     int n1 = dt1.year * 365 + dt1.day;
  
-    // Add days for months in given date
     for (int i = 0; i < dt1.month - 1; i++)
         n1 += monthDays[i];
- 
-    // Since every leap year is of 366 days,
-    // Add a day for every leap year
-    //n1 += countLeapYears(dt1);
- 
-    // SIMILARLY, COUNT TOTAL NUMBER OF
-    // DAYS BEFORE 'dt2'
  
     int n2 = dt2.year * 365 + dt2.day;
     for (int i = 0; i < dt2.month - 1; i++)
         n2 += monthDays[i];
-    //n2 += countLeapYears(dt2);
- 
-    // return difference between two counts
+
     return (n2 - n1);
 }

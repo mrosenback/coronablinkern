@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdbool.h>
 
 /**
@@ -6,6 +7,10 @@
 bool insert();
 
 bool delete();
+
+bool readFromFile(FILE * fileptr);
+
+bool writeToFile(FILE * fileptr);
 
 /**
  * Print the list

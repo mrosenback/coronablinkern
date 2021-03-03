@@ -32,16 +32,21 @@ bool insert(int value, int dd, int mm, int yy) {
 }
 
 bool delete() {
-    struct Node* temp = head;
+    struct Node* temp = head, *prev;
 
     getCurrentDate(&currentDate);
 
-    while(temp) {
+    while(temp != NULL) {
         int result = getDifference(currentDate, temp->date);
-        printf("svar: %d ", result);
-       if(result > 21) {
+
+       if(result > 21 && temp != NULL) {
+           head = temp->next;
+           free(temp);
+       } else if(result > 21) {
+           prev->next = temp->next;
            free(temp);
        } 
+       prev = temp;
        temp = temp->next;
     }
 
@@ -59,5 +64,32 @@ bool printList() {
     }
     printf("\n");
 
+    return true;
+}
+
+bool writeToFile(FILE * fileptr) {
+    struct Node* temp = head;
+    
+    while(temp != NULL) {
+        fprintf(fileptr,"\n| ID: %d | Date: %d/%d/%d |\n",temp->data, temp->date.day, temp->date.month, temp->date.year);
+        temp = temp->next;
+    }
+    
+    return true;
+}
+
+bool readFromFile(FILE * fileptr) {
+    int value, dd, mm, yy;
+    int fieldsRead;
+
+    do {
+        fieldsRead = fscanf(fileptr,"\n| ID: %d | Date: %d/%d/%d |\n",&value, &dd, &mm, &yy);
+
+        if(fieldsRead == 4) {
+            insert(value, dd, mm, yy);
+            delete();
+        }
+    } while(fieldsRead == 4);
+    
     return true;
 }
