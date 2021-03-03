@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
+#define ANSI_COLOR_RED "\x1b[31m"
+#define ANSI_COLOR_RESET "\x1b[0m"
 
 Date date;
 
@@ -33,7 +35,7 @@ void networkSimulation(int messageType) {
 void openingCode() {
     int openingCode;
 
-    printf("\n--- Opening Code ---\n\n");
+    printf("\n--- "ANSI_COLOR_RED"Opening Code"ANSI_COLOR_RESET" ---\n\n");
     printf("Enter your Opening Code: ");
     scanf("%d", &openingCode);
 
@@ -47,7 +49,7 @@ void identificationCode() {
     int identificationCode;
     int dd,mm,yy;
     
-    printf("\n--- Identification Code ---\n\n");
+    printf("\n--- "ANSI_COLOR_RED"Identification Code"ANSI_COLOR_RESET" ---\n\n");
     printf("Enter the Identification Code: ");
     scanf("%d", &identificationCode);
 
@@ -72,18 +74,18 @@ void identificationCode() {
 
 //Shows if you've been exposed with random code
 void contagionAlarm() {
-    printf("\n--- Contagion Alarm ---\n");
+    printf("\n--- "ANSI_COLOR_RED"Contagion Alarm"ANSI_COLOR_RESET" ---\n");
 
     srand(time(NULL));
-    int randomCode;
+    //int randomCode;
+
+    int code = 25;
 
     //Random identification code
-    randomCode = rand() % 100 + 1;
+    //randomCode = rand() % 100 + 1;
     
-    printf("\nYou may have been exposed!\n");
-    printf("\nIdentification code: %d\n", randomCode);
+    checkContagion(code);
     Sleep(2000);
-    
 }
 
 int main() {
@@ -95,14 +97,12 @@ int main() {
     if(fileptr != NULL) {
         readFromFile(fileptr);
         fclose(fileptr);
-    } else {
-        printf("File not found!");
     }
     
     //Loops until the the exit option is picked
     while (1)
     {
-        printf("\n--- Welcome to Coronablinkern ---\n\n");
+        printf("\n--- "ANSI_COLOR_RED"Welcome to Coronablinkern"ANSI_COLOR_RESET" ---\n\n");
         printf("1< Enter an Opening Code if you have been infected\n2< Enter Identification Code\n3< Receive Infection Alarm\n4< Exit\n\n");
         printf("Choose category (1, 2 or 3): ");
         scanf("%d", &choice);
@@ -121,6 +121,8 @@ int main() {
             Sleep(2000);
         }
     }
+
+    delete();
 
     fileptr = fopen(fileName, "w");
     if(fileptr != NULL) {

@@ -28,9 +28,10 @@ bool checkDate(Date date) {
                     return true;
                 else if (date.day == 29 && date.month == 2 && (date.year % 400 == 0 || (date.year % 4 == 0 && date.year % 100 != 0)))
                     return true;
-                else
+                else {
                     printf("Day is not valid.\n");
                     return false;
+                }      
             }
             else
             {

@@ -5,7 +5,7 @@
 int main() {
 
     CurrentDate d1;
-    Date d2, d3, d4, d5;
+    Date d2, d3, d4;
 
     TEST_CASE("Get current date");
     VERIFY(getCurrentDate(&d1), "Getting todays date: ");
@@ -25,6 +25,9 @@ int main() {
 
     TEST_CASE("Check date");
     VERIFY(!checkDate(d3), "Checking if 55/02/2021 is invalid date");
+
+    TEST_CASE("Check date");
+    VERIFY(!checkDate(d4), "Checking if 11/55/2021 is invalid date\n");
 
     TEST_CASE("Check date");
     VERIFY(!checkDate(d4), "Checking if 11/55/2021 is invalid date\n");

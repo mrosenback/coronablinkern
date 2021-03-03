@@ -87,9 +87,28 @@ bool readFromFile(FILE * fileptr) {
 
         if(fieldsRead == 4) {
             insert(value, dd, mm, yy);
-            delete();
         }
     } while(fieldsRead == 4);
     
+    return true;
+}
+
+bool checkContagion(int code) {
+    struct Node* temp = head;
+    bool safe = false;
+    
+    while(temp != NULL) {
+        if(code == temp->data) {
+            printf("\nYou may have been exposed by ID: %d\n", code);
+            safe = true;
+            break;
+        }
+        temp = temp->next;
+    }
+
+    if(!safe) {
+        printf("\nYou are safe!\n");
+    }
+
     return true;
 }
