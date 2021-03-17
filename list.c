@@ -93,18 +93,12 @@ bool printList()
 bool writeToFile(FILE *fileptr)
 {
     struct Node *node = head;
-    struct Node *holdNext = NULL;
 
     while (node != NULL)
     {
-        holdNext = node->next;
-        node->next = NULL;
+        fwrite(&node, sizeof(struct Node), 1, fileptr);
+        printf("Writing to file: %d %d/%d/%d\n", node->data, node->date.day, node->date.month, node->date.year);
 
-        fwrite(node, sizeof(struct Node), 1, fileptr);
-        printf("Write: %d | %d/%d/%d", node->data, node->date.day, node->date.month, node->date.year);
-
-        node->next = holdNext;
-        holdNext = NULL;
         node = node->next;
     }
 
@@ -112,16 +106,17 @@ bool writeToFile(FILE *fileptr)
     return true;
 }
 
-void readFromFile(FILE *fileptr)
+bool readFromFile(FILE *fileptr)
 {
     struct Node *node;
 
-    while(fread(&node, sizeof(node), 1, fileptr) == 1) {
-        printf("Read: %d | %d/%d/%d", node->data, node->date.day, node->date.month, node->date.year);
+    while(fread(&node, sizeof(struct Node), 1, fileptr)) {
+        printf("Reading from file: %d %d/%d/%d\n", node->data, node->date.day, node->date.month, node->date.year);
         insert(node->data, node->date.day, node->date.month, node->date.year);
     }
 
     fclose(fileptr);
+    return true;
 }
 
 bool checkContagion(int code)
