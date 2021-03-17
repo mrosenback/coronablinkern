@@ -14,7 +14,7 @@ bool delete();
 /**
  * Read info from text file
  */
-bool readFromFile(FILE * fileptr);
+void readFromFile(FILE * fileptr);
 
 /**
  * Write info to text file

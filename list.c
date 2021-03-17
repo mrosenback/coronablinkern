@@ -93,13 +93,18 @@ bool printList()
 bool writeToFile(FILE *fileptr)
 {
     struct Node *node = head;
+    struct Node *holdNext = NULL;
 
     while (node != NULL)
     {
-        //fprintf(fileptr,"\n| ID: %d | Date: %d/%d/%d |\n",temp->data, temp->date.day, temp->date.month, temp->date.year);
+        holdNext = node->next;
+        node->next = NULL;
 
-        fwrite(&node, sizeof(node), 1, fileptr);
+        fwrite(node, sizeof(struct Node), 1, fileptr);
         printf("Write: %d | %d/%d/%d", node->data, node->date.day, node->date.month, node->date.year);
+
+        node->next = holdNext;
+        holdNext = NULL;
         node = node->next;
     }
 
@@ -107,17 +112,16 @@ bool writeToFile(FILE *fileptr)
     return true;
 }
 
-bool readFromFile(FILE *fileptr)
+void readFromFile(FILE *fileptr)
 {
     struct Node *node;
 
-    while(fread(&node, sizeof(node), 1, fileptr)) {
+    while(fread(&node, sizeof(node), 1, fileptr) == 1) {
         printf("Read: %d | %d/%d/%d", node->data, node->date.day, node->date.month, node->date.year);
         insert(node->data, node->date.day, node->date.month, node->date.year);
     }
 
     fclose(fileptr);
-    return true;
 }
 
 bool checkContagion(int code)
