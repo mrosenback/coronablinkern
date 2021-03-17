@@ -25,7 +25,7 @@ bool insert(int value, int dd, int mm, int yy)
     new_node->date.year = yy;
     new_node->next = NULL;
 
-    if (head == NULL || head->date.day <= new_node->date.day)
+    if (head == NULL || head->date.day <= new_node->date.day || head->date.month <= new_node->date.month)
     {
         new_node->next = head;
         head = new_node;
@@ -33,7 +33,7 @@ bool insert(int value, int dd, int mm, int yy)
     else
     {
         node = head;
-        while (node->next != NULL && node->next->date.day > new_node->date.day)
+        while (node->next != NULL && (node->next->date.day > new_node->date.day || head->date.month > new_node->date.month))
         {
             node = node->next;
         }
