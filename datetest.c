@@ -5,7 +5,7 @@
 int main() {
 
     CurrentDate d1;
-    Date d2, d3, d4;
+    Date d2, d3, d4, d5;
 
     TEST_CASE("Get current date");
     VERIFY(getCurrentDate(&d1), "Getting todays date: ");
@@ -20,6 +20,9 @@ int main() {
     TEST_CASE("Set date");
     VERIFY(setDate(&d4, 11, 55, 2021), "Setting 06/55/2021 as date");
 
+    TEST_CASE("Set date");
+    VERIFY(setDate(&d5, 26, 03, 2021), "Setting 26/03/2021 as date");
+
     TEST_CASE("Check date");
     VERIFY(checkDate(d2), "Checking if 11/02/2021 is valid date");
 
@@ -31,6 +34,9 @@ int main() {
 
     TEST_CASE("Check date");
     VERIFY(!checkDate(d4), "Checking if 11/55/2021 is invalid date\n");
+
+    TEST_CASE("Check if date is 21 days more than current date");
+    VERIFY(getDifference(d1, d5), "Checking if 26/03/2021 is 21 days older than current day\n");
 
     return 0;
 }

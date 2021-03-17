@@ -70,5 +70,5 @@ int getDifference(CurrentDate dt1, Date dt2) {
     for (int i = 0; i < dt2.month - 1; i++)
         n2 += monthDays[i];
 
-    return (n2 - n1);
+    return (n1 - n2);
 }

@@ -3,110 +3,141 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node { 
+struct Node
+{
     int data;
     Date date;
-    struct Node* next; 
+    struct Node *next;
 };
 
-struct Node* head;
+struct Node *head;
 
 CurrentDate currentDate;
 
-bool insert(int value, int dd, int mm, int yy) {
+bool insert(int value, int dd, int mm, int yy)
+{
+    struct Node *new_node, *node;
+    new_node = malloc(sizeof(struct Node));
 
-    struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
-    temp->data = value;
-    temp->date.day = dd;
-    temp->date.month = mm;
-    temp->date.year = yy;
-    temp->next = NULL;
+    new_node->data = value;
+    new_node->date.day = dd;
+    new_node->date.month = mm;
+    new_node->date.year = yy;
+    new_node->next = NULL;
 
-    if(head != NULL) {
-        temp->next = head;
+    if (head == NULL || head->date.day <= new_node->date.day)
+    {
+        new_node->next = head;
+        head = new_node;
     }
+    else
+    {
+        node = head;
+        while (node->next != NULL && node->next->date.day > new_node->date.day)
+        {
+            node = node->next;
+        }
 
-    head = temp;
+        new_node->next = node->next;
+        node->next = new_node;
+    }
 
     return true;
 }
 
-bool delete() {
-    struct Node* temp = head, *prev;
+bool delete ()
+{
+    struct Node *temp = head, *prev;
 
     getCurrentDate(&currentDate);
+    int result = getDifference(currentDate, temp->date);
 
-    while(temp != NULL) {
-        int result = getDifference(currentDate, temp->date);
+    if (result > 21 && temp != NULL)
+    {
+        head = temp->next;
+        free(temp);
+    }
 
-       if(result > 21 && temp != NULL) {
-           head = temp->next;
-           free(temp);
-       } else if(result > 21) {
-           prev->next = temp->next;
-           free(temp);
-       } 
-       prev = temp;
-       temp = temp->next;
+    while (temp != NULL)
+    {
+        result = getDifference(currentDate, temp->date);
+
+        if (result > 21)
+        {
+            prev->next = temp->next;
+            free(temp);
+        }
+        prev = temp;
+        temp = temp->next;
     }
 
     return true;
 }
 
-bool printList() {
-    struct Node* temp = head;
+bool printList()
+{
+    struct Node *node = head;
 
-    printf("\n----------------------------");
-    while(temp != NULL) {
-        printf("\n| ID: %d | Date: %d/%d/%d |\n",temp->data, temp->date.day, temp->date.month, temp->date.year);
-        printf("----------------------------");
-        temp = temp->next;
+    printf("\n+--------+-----------------+");
+    while (node != NULL)
+    {
+        printf("\n| ID: %d | Date: %d/%d/%d |\n", node->data, node->date.day, node->date.month, node->date.year);
+        printf("+--------+-----------------+");
+        node = node->next;
     }
     printf("\n");
 
     return true;
 }
 
-bool writeToFile(FILE * fileptr) {
-    struct Node* temp = head;
-    
-    while(temp != NULL) {
-        fprintf(fileptr,"\n| ID: %d | Date: %d/%d/%d |\n",temp->data, temp->date.day, temp->date.month, temp->date.year);
-        temp = temp->next;
+bool writeToFile(FILE *fileptr)
+{
+    struct Node *node = head;
+
+    while (node != NULL)
+    {
+        //fprintf(fileptr,"\n| ID: %d | Date: %d/%d/%d |\n",temp->data, temp->date.day, temp->date.month, temp->date.year);
+
+        fwrite(&node, sizeof(node), 1, fileptr);
+        printf("Write: %d | %d/%d/%d", node->data, node->date.day, node->date.month, node->date.year);
+        node = node->next;
     }
-    
+
+    fclose(fileptr);
     return true;
 }
 
-bool readFromFile(FILE * fileptr) {
-    int value, dd, mm, yy;
-    int fieldsRead;
+bool readFromFile(FILE *fileptr)
+{
+    struct Node *node;
 
-    do {
-        fieldsRead = fscanf(fileptr,"\n| ID: %d | Date: %d/%d/%d |\n",&value, &dd, &mm, &yy);
+    while(fread(&node, sizeof(node), 1, fileptr)) {
+        printf("Read: %d | %d/%d/%d", node->data, node->date.day, node->date.month, node->date.year);
+        insert(node->data, node->date.day, node->date.month, node->date.year);
+    }
 
-        if(fieldsRead == 4) {
-            insert(value, dd, mm, yy);
-        }
-    } while(fieldsRead == 4);
-    
+    fclose(fileptr);
     return true;
 }
 
-bool checkContagion(int code) {
-    struct Node* temp = head;
+bool checkContagion(int code)
+{
+    struct Node *node = head;
     bool safe = false;
-    
-    while(temp != NULL) {
-        if(code == temp->data) {
+
+    while (node != NULL)
+    {
+        if (code == node->data)
+        {
             printf("\nYou may have been exposed by ID: %d\n", code);
             safe = true;
             break;
         }
-        temp = temp->next;
+        node = node->next;
     }
 
-    if(!safe) {
+    if (!safe)
+    {
         printf("\nYou are safe!\n");
     }
 

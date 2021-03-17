@@ -46,12 +46,12 @@ void openingCode() {
 
 //Shows the Identification Code menu
 void identificationCode() {
-    int identificationCode;
+    int id;
     int dd,mm,yy;
     
     printf("\n--- "ANSI_COLOR_RED"Identification Code"ANSI_COLOR_RESET" ---\n\n");
     printf("Enter the Identification Code: ");
-    scanf("%d", &identificationCode);
+    scanf("%d", &id);
 
     //Loops if the date is not valid
     while(1) {
@@ -68,21 +68,18 @@ void identificationCode() {
             break;
         }
     }
-    insert(identificationCode, dd, mm, yy);
+    insert(id, dd, mm, yy);
     networkSimulation(2);
 }
 
 //Shows if you've been exposed with random code
 void contagionAlarm() {
+    int code;
+
     printf("\n--- "ANSI_COLOR_RED"Contagion Alarm"ANSI_COLOR_RESET" ---\n");
 
-    srand(time(NULL));
-    //int randomCode;
-
-    int code = 25;
-
-    //Random identification code
-    //randomCode = rand() % 100 + 1;
+    printf("Enter the ID: ");
+    scanf("%d", &code);
     
     checkContagion(code);
     Sleep(2000);
@@ -90,13 +87,12 @@ void contagionAlarm() {
 
 int main() {
     int choice = 5;
-    char * fileName = "list.txt";
+    char * fileName = "list.bin";
     FILE * fileptr;
 
-    fileptr = fopen(fileName, "r");
+    fileptr = fopen(fileName, "rb");
     if(fileptr != NULL) {
         readFromFile(fileptr);
-        fclose(fileptr);
     }
     
     //Loops until the the exit option is picked
@@ -124,10 +120,9 @@ int main() {
 
     delete();
 
-    fileptr = fopen(fileName, "w");
+    fileptr = fopen(fileName, "wb");
     if(fileptr != NULL) {
         writeToFile(fileptr);
-        fclose(fileptr);
     } else {
         printf("File not found!");
     }
