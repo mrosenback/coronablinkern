@@ -72,3 +72,20 @@ int getDifference(CurrentDate dt1, Date dt2) {
 
     return (n1 - n2);
 }
+
+bool isBefore(Date dt1, Date dt2) {
+
+    if(dt1.year < dt2.year) {
+        return true;
+    } else if(dt1.year > dt2.year) {
+        return false;
+    } else if(dt1.month < dt2.month) {
+        return true;
+    } else if(dt1.month > dt2.month) {
+        return false;
+    } else if(dt1.day < dt2.day) {
+        return true;
+    } else {
+        return false;
+    }
+}

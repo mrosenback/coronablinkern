@@ -25,7 +25,7 @@ bool insert(int value, int dd, int mm, int yy)
     new_node->date.year = yy;
     new_node->next = NULL;
 
-    if (head == NULL || head->date.day <= new_node->date.day || head->date.month <= new_node->date.month)
+    if (head == NULL || isBefore(head->date, new_node->date))
     {
         new_node->next = head;
         head = new_node;
@@ -33,7 +33,7 @@ bool insert(int value, int dd, int mm, int yy)
     else
     {
         node = head;
-        while (node->next != NULL && (node->next->date.day > new_node->date.day || head->date.month > new_node->date.month))
+        while (node->next != NULL && isBefore(new_node->date, node->next->date))
         {
             node = node->next;
         }
@@ -96,26 +96,30 @@ bool writeToFile(FILE *fileptr)
 
     while (node != NULL)
     {
-        fwrite(&node, sizeof(struct Node), 1, fileptr);
-        printf("Writing to file: %d %d/%d/%d\n", node->data, node->date.day, node->date.month, node->date.year);
+        fwrite(&node->data, sizeof(int), 1, fileptr);
+        fwrite(&node->date.day, sizeof(int), 1, fileptr);
+        fwrite(&node->date.month, sizeof(int), 1, fileptr);
+        fwrite(&node->date.year, sizeof(int), 1, fileptr);
 
         node = node->next;
     }
 
-    fclose(fileptr);
     return true;
 }
 
 bool readFromFile(FILE *fileptr)
 {
-    struct Node *node;
+    struct Node *node = malloc(sizeof(struct Node));
 
-    while(fread(&node, sizeof(struct Node), 1, fileptr)) {
-        printf("Reading from file: %d %d/%d/%d\n", node->data, node->date.day, node->date.month, node->date.year);
+    while (fread(&node->data, sizeof(int), 1, fileptr) == 1)
+    {
+        fread(&node->date.day, sizeof(int), 1, fileptr);
+        fread(&node->date.month, sizeof(int), 1, fileptr);
+        fread(&node->date.year, sizeof(int), 1, fileptr);
+
         insert(node->data, node->date.day, node->date.month, node->date.year);
     }
 
-    fclose(fileptr);
     return true;
 }
 

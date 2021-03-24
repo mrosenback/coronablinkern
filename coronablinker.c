@@ -94,6 +94,7 @@ int main() {
     if(fileptr != NULL) {
         readFromFile(fileptr);
     }
+    fclose(fileptr);
     
     //Loops until the the exit option is picked
     while (1)
@@ -126,6 +127,7 @@ int main() {
     } else {
         printf("File not found!");
     }
+    fclose(fileptr);
     
     return 0;
 }

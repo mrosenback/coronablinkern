@@ -36,3 +36,5 @@ bool checkDate(Date date);
 bool getCurrentDate(CurrentDate* currentDate);
 
 int getDifference(CurrentDate dt1, Date dt2);
+
+bool isBefore(Date dt1, Date dt2);
